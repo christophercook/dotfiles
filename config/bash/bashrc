@@ -1,0 +1,14 @@
+# bashrc: executed by bash for non-login shells.
+
+# If not running interactively, don't do anything
+case $- in
+    *i*) ;;
+      *) return;;
+esac
+
+# Load bash files
+for F in "${XDG_CONFIG_HOME-$HOME/.config}"/bash/*.sh; do
+  [ -f "$F" ] && . "$F"
+done
+
+

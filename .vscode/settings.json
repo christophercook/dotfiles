@@ -1,0 +1,7 @@
+{
+  // When enabled, will attempt to guess the character set encoding when opening files. This setting can be configured per language too.
+  "files.autoGuessEncoding": true,
+  // The default language mode that is assigned to new files.
+  "files.defaultLanguage": "sh",
+  "files.trimTrailingWhitespace": true,
+}
