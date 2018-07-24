@@ -36,7 +36,7 @@ if [[ -n "$DESKTOP_SESSION" || "$OSTYPE" = darwin* ]]; then
   [ ! -d "$DATA_DIR" ] && mkdir -p "$DATA_DIR"
 
   # Move bash history to new DATA_DIR but don't overwrite
-  mv -n "$HOME"/.bash_history "$DATA_DIR"/bash_history
+  [ -f ~/.bash_history] && mv -n ~/.bash_history "$DATA_DIR"/bash_history
 
   # Move existing files to backup directory
   BACKUP_DIR="$HOME/bash_profile_backup_$(date +%s)"

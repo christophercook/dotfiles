@@ -6,6 +6,10 @@ case $- in
       *) return;;
 esac
 
+case "$TERM" in
+    xterm-color|*-256color) export COLOR_TERM=yes;;
+esac
+
 # Set XDG dirs
 if [ "$OSTYPE" = darwin* ]; then
   # There doesn't seem to be a consensus for supporting the DATA path for macOS
