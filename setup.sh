@@ -23,7 +23,7 @@ fi
 if [[ -n "$DESKTOP_SESSION" || "$OSTYPE" = darwin* ]]; then
 
   # Define dirs
-  if [ "$OSTYPE" = darwin* ]; then
+  if [[ "$OSTYPE" = darwin* ]]; then
     XDG_CONFIG_HOME="${XDG_CONFIG_HOME-$HOME/Library/Application Support}"
     XDG_DATA_HOME="${XDG_DATA_HOME-$HOME/Library/Application Support}"
   else
@@ -73,7 +73,7 @@ if [[ -n "$DESKTOP_SESSION" || "$OSTYPE" = darwin* ]]; then
   ln -sfv "$CWD"/config/bash/bashrc "$HOME"/.bashrc
 
   # Copy data directory
-  if [ "$OSTYPE" = linux* ]; then
+  if [[ "$OSTYPE" = linux* ]]; then
     cp -nvr "$CWD"/data-linux/* "$DATA_DIR"/
   fi
 
