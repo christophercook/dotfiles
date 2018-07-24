@@ -7,7 +7,8 @@
 
 
 # Abort if a prompt is already defined.
-[[ "$PROMPT_COMMAND" ]] && return
+# PROMPT_COMMAND will almost always be set for login shell
+#[[ "$PROMPT_COMMAND" ]] && return
 
 # ANSI CODES - SEPARATE MULTIPLE VALUES WITH ;
 #
