@@ -24,8 +24,8 @@ if [[ -n "$DESKTOP_SESSION" || "$OSTYPE" = darwin* ]]; then
 
   # Define dirs
   if [[ "$OSTYPE" = darwin* ]]; then
-    XDG_CONFIG_HOME="${XDG_CONFIG_HOME-$HOME/Library/Application Support}"
-    XDG_DATA_HOME="${XDG_DATA_HOME-$HOME/Library/Application Support}"
+    CONFIG_DIR="${XDG_CONFIG_HOME-$HOME/Library/Application Support}"
+    DATA_DIR="${XDG_DATA_HOME-$HOME/Library/Application Support}"
   else
     CONFIG_DIR="${XDG_CONFIG_HOME-$HOME/.config}"
     DATA_DIR="${XDG_DATA_HOME-$HOME/.local/share}"
@@ -36,37 +36,30 @@ if [[ -n "$DESKTOP_SESSION" || "$OSTYPE" = darwin* ]]; then
   [ ! -d "$DATA_DIR" ] && mkdir -p "$DATA_DIR"
 
   # Move bash history to new DATA_DIR but don't overwrite
-  [ -f ~/.bash_history] && mv -n ~/.bash_history "$DATA_DIR"/bash_history
+  [ -f ~/.bash_history ] && mv -n ~/.bash_history "$DATA_DIR"/bash_history
 
   # Move existing files to backup directory
   BACKUP_DIR="$HOME/bash_profile_backup_$(date +%s)"
   echo "Moving existing bash files to $BACKUP_DIR"
   mkdir "$BACKUP_DIR"
   for F in "$HOME"/.{bash*,profile}; do
-    [ "$F" = "$HOME/.bashrc" ] && [ -L "$F" ] && rm "$F" && continue # delete if .bashrc is a symlink
-    [ "$F" = "$HOME/.profile" ] && [ -L "$F" ] && rm "$F" && continue # delete if .profile is a symlink
+    [ -L "$F" ] && continue
     DEST="$BACKUP_DIR/$(basename $F|cut -d\. -f2)"
     echo "Moving $F to $DEST"
     mv "$F" "$DEST"
   done
 
-  # Backup bash directory or trash symlink if found in XDG_CONFIG_HOME path
-  F="$CONFIG_DIR"/bash
-  if [ -d "$F" ]; then
-    if [ -L "$F" ]; then # if dir is a symlink
-      rm "$F"
-    else
-      mkdir -p "$BACKUP_DIR"/.config
-      mv "$F" "$BACKUP_DIR"/.config/
-    fi
+  # Backup bash directory if found in XDG_CONFIG_HOME path
+  if [ -d "$CONFIG_DIR"/bash ] && [ ! -L "$CONFIG_DIR"/bash ]; then
+    mkdir -p "$BACKUP_DIR"/config
+    mv "$F" "$BACKUP_DIR"/config/
   fi
 
   # If backup dir is empty at this point lets remove it
   [ "$(ls -A -1 $BACKUP_DIR | wc -l)" -eq 0 ] && rmdir "$BACKUP_DIR"
 
   # Symlink bash config into CONFIG_HOME
-  [ -L "$CONFIG_DIR"/bash ] && rm "$CONFIG_DIR"/bash
-  ln -sfv "$CWD"/config/bash "$CONFIG_DIR"/
+  ln -sfv "$CWD"/config/bash "$CONFIG_DIR"
 
   # Symlink profile and bashrc file into HOME
   ln -sfv "$CWD"/config/profile "$HOME"/.profile
