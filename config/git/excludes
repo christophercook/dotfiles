@@ -1,0 +1,30 @@
+# Archives
+*.7z
+*.jar
+*.rar
+*.zip
+*.gz
+*.bzip
+*.xz
+*.lzma
+*.iso
+*.tar
+
+# Installable Packages
+*.dmg
+*.xpi
+*.gem
+*.egg
+*.deb
+*.rpm
+
+# Logs and databases
+*.log
+*.sqlite
+
+# OS trash
+.DS_Store
+.Spotlight-V100
+.Trashes
+Thumbs.db
+Desktop.ini
