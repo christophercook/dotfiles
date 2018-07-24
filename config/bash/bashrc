@@ -12,7 +12,7 @@ if [ "$OSTYPE" = darwin* ]; then
   XDG_CONFIG_HOME="$HOME/Library/Application Support"
   XDG_DATA_HOME="$HOME/Library/Application Support"
   XDG_CACHE_HOME="$HOME"/Library/Caches
-  XDG_RUNTIME_DIR="$TMPDIR"/
+  XDG_RUNTIME_DIR="$TMPDIR"
 else
   XDG_CONFIG_HOME="$HOME"/.config
   XDG_DATA_HOME="$HOME"/.local/share

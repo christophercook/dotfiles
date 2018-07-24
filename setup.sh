@@ -23,8 +23,13 @@ fi
 if [[ -n "$DESKTOP_SESSION" || "$OSTYPE" = darwin* ]]; then
 
   # Define dirs
-  CONFIG_DIR="${XDG_CONFIG_HOME-$HOME/.config}"
-  DATA_DIR="${XDG_DATA_HOME-$HOME/.local/share}"
+  if [ "$OSTYPE" = darwin* ]; then
+    XDG_CONFIG_HOME="${XDG_CONFIG_HOME-$HOME/Library/Application Support}"
+    XDG_DATA_HOME="${XDG_DATA_HOME-$HOME/Library/Application Support}"
+  else
+    CONFIG_DIR="${XDG_CONFIG_HOME-$HOME/.config}"
+    DATA_DIR="${XDG_DATA_HOME-$HOME/.local/share}"
+  fi
 
   # Create config and data dirs if they don't exist
   [ ! -d "$CONFIG_DIR" ] && mkdir -p "$CONFIG_DIR"
@@ -37,7 +42,7 @@ if [[ -n "$DESKTOP_SESSION" || "$OSTYPE" = darwin* ]]; then
   BACKUP_DIR="$HOME/bash_profile_backup_$(date +%s)"
   echo "Moving existing bash files to $BACKUP_DIR"
   mkdir "$BACKUP_DIR"
-  for F in "$HOME"/.bash* "$HOME"/.profile*; do
+  for F in "$HOME"/.{bash*,profile}; do
     [ "$F" = "$HOME/.bashrc" ] && [ -L "$F" ] && rm "$F" && continue # delete if .bashrc is a symlink
     [ "$F" = "$HOME/.profile" ] && [ -L "$F" ] && rm "$F" && continue # delete if .profile is a symlink
     DEST="$BACKUP_DIR/$(basename $F|cut -d\. -f2)"
@@ -88,3 +93,5 @@ fi
 
 # Clean up
 unset CWD DEST F
+
+source ~/.profile
