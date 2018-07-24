@@ -11,7 +11,7 @@ case "$TERM" in
 esac
 
 # Set XDG dirs
-if [ "$OSTYPE" = darwin* ]; then
+if [[ "$OSTYPE" = darwin* ]]; then
   # There doesn't seem to be a consensus for supporting the DATA path for macOS
   XDG_CONFIG_HOME="$HOME/Library/Application Support"
   XDG_DATA_HOME="$HOME/Library/Application Support"
