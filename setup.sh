@@ -65,11 +65,6 @@ if [[ -n "$DESKTOP_SESSION" || "$OSTYPE" = darwin* ]]; then
   ln -sfv "$CWD"/config/profile "$HOME"/.profile
   ln -sfv "$CWD"/config/bash/bashrc "$HOME"/.bashrc
 
-  # Copy data directory
-  if [[ "$OSTYPE" = linux* ]]; then
-    cp -nvr "$CWD"/data-linux/* "$DATA_DIR"/
-  fi
-
   # Clean up
   unset CONFIG_DIR DATA_DIR BACKUP_DIR
 
