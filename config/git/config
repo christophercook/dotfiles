@@ -1,6 +1,8 @@
+[core]
+	excludesfile = 
 [user]
-  user.name = Christopher Cook
-  user.email =
+	name = 
+	email =
 [color]
 	status = auto
 	diff = auto
@@ -9,7 +11,7 @@
 [alias]
 	ci = commit
 	st = status -s
-  stc = diff --name-status --cached
+	stc = diff --name-status --cached
 	cl = clone
 	co = checkout
 	br = branch
@@ -25,13 +27,11 @@
 	lt = describe --tags --abbrev=0
 	logtree = log --graph --oneline --decorate --all
 	changelog = !git log $(git lt)..HEAD --pretty=format:%cd\\ %s\\ [%an] --date=short
-[core]
-	excludesfile = "~/.config/git/excludes"
 [push]
 	default = current
 [diff]
 	renames = copies
 [difftool]
 	prompt = false
-[merge "ours"]
-	driver = true
+[merge]
+[mergetool]
