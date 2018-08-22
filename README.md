@@ -6,5 +6,5 @@ This repository stores environment configuration for my personal Linux and macOS
 
 ```sh
 git clone https://github.com/christophercook/dotfiles.git
-./setup.sh
+cd dotfiles && ./setup.sh
 ```
