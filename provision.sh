@@ -8,7 +8,7 @@
 # If this file is being sourced, exit now.
 [[ "$1" == "source" ]] && return
 
-
+# Display help
 if [[ "$1" == "-h" || "$1" == "--help" ]]; then cat <<HELP
 
 Usage: $(basename "$0")
@@ -16,10 +16,15 @@ Usage: $(basename "$0")
 HELP
 exit; fi
 
+# Functions
 function __provision_cleanup {
-  unset CWD OS CONFIG_DIR DATA_DIR F
+  unset CWD OS CONFIG_DIR DATA_DIR F FULL_NAME EMAIL_ADDRESS
 }
 trap __provision_cleanup EXIT
+
+# Prompt for values
+read -p "Your full name? " FULL_NAME
+read -p "Your email address? " EMAIL_ADDRESS
 
 # Get script directory
 # realpath is expected to exist on modern Linux and macOS
@@ -38,15 +43,21 @@ if [[ -n "$DESKTOP_SESSION" || "$OS" = macos ]]; then
   if [[ "$OS" = macos ]]; then
     CONFIG_DIR="${XDG_CONFIG_HOME-$HOME/Library/Application Support}"
     DATA_DIR="${XDG_DATA_HOME-$HOME/Library/Application Support}"
+    CACHE_DIR="${XDG_CACHE_HOME-$HOME/Library/Caches}"
+    RUNTIME_DIR="${XDG_RUNTIME_DIR-/run/user/$UID}"
   else
     CONFIG_DIR="${XDG_CONFIG_HOME-$HOME/.config}"
     DATA_DIR="${XDG_DATA_HOME-$HOME/.local/share}"
+    CACHE_DIR="${XDG_CACHE_HOME-$HOME/.cache}"
+    RUNTIME_DIR="${XDG_RUNTIME_DIR-/run/user/$UID}"
   fi
 
   # Run base provisioning scripts
-  export CONFIG_DIR DATA_DIR CWD OS
+  export CONFIG_DIR DATA_DIR CACHE_DIR CWD OS FULL_NAME EMAIL_ADDRESS
   for F in "$CWD"/provision/{00-base,01-base-"$OS"}.sh; do
     [ -f "$F" ] && source "$F"
   done
 
 fi
+
+exit 0
