@@ -40,19 +40,17 @@ if [[ -n "$DESKTOP_SESSION" || "$OSTYPE" = darwin* ]]; then
 
   # Move existing files to backup directory
   BACKUP_DIR="$HOME/bash_profile_backup_$(date +%s)"
-  echo "Moving existing bash files to $BACKUP_DIR"
   mkdir "$BACKUP_DIR"
   for F in "$HOME"/.{bash*,profile}; do
     [ -L "$F" ] && continue
     DEST="$BACKUP_DIR/$(basename $F|cut -d\. -f2)"
-    echo "Moving $F to $DEST"
-    mv "$F" "$DEST"
+    mv -v "$F" "$DEST"
   done
 
   # Backup bash directory if found in XDG_CONFIG_HOME path
   if [ -d "$CONFIG_DIR"/bash ] && [ ! -L "$CONFIG_DIR"/bash ]; then
     mkdir -p "$BACKUP_DIR"/config
-    mv "$F" "$BACKUP_DIR"/config/
+    mv -v "$F" "$BACKUP_DIR"/config/
   fi
 
   # If backup dir is empty at this point lets remove it
@@ -69,14 +67,8 @@ if [[ -n "$DESKTOP_SESSION" || "$OSTYPE" = darwin* ]]; then
   unset CONFIG_DIR DATA_DIR BACKUP_DIR
 
 ### Server environment
-else
-    # Copy bashrc to home
-    echo "Will do: cp $CWD/bash/bashrc $HOME/.bashrc"
-    for F in "$CWD"/bash/{bashrc}; do
-      DEST="$HOME"/.$file
-      mv -i "$F" "$DEST" # don't overwrite without permission
-    done
-
+#else
+  # TODO
 fi
 
 # Clean up
