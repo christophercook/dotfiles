@@ -31,8 +31,18 @@ if [ ! -e /etc/apt/sources.list.d/yarn.list ]; then
   NEW_SOURCES=yes
 fi
 
-#Install node and related packages
+# Install node and related packages
 [ "$NEW_SOURCES" = yes ] && sudo apt-get update -qq && unset NEW_SOURCES
 [ -z "$(which node)" ] && sudo apt-get install -y nodejs
 [ -z "$(which npm)" ] && sudo apt-get install -y npm
 [ -z "$(which yarn)" ] && sudo apt-get install -y yarn
+
+# Install some global modules
+yarn_modules=(
+  eslint
+  create-react-app
+  vue-cli
+)
+for M in "${yarn_modules[@]}"; do
+  [ ! -d $DATA_DIR/yarn/global/node_modules/$M ] && yarn global add "$M"
+done
