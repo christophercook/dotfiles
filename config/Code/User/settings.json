@@ -1,0 +1,21 @@
+{
+    "editor.tabSize": 2,
+    "editor.dragAndDrop": false,
+    "editor.formatOnPaste": true,
+    "window.zoomLevel": 1,
+    "workbench.statusBar.feedback.visible": false,
+    "workbench.startupEditor": "none",
+    "workbench.colorTheme": "Visual Studio Dark",
+    "workbench.colorCustomizations": {
+        "editorGutter.background": "#161616"
+    },
+    "gitlens.advanced.messages": {
+        "suppressShowKeyBindingsNotice": true
+    },
+    "[solidity]": {
+        "editor.insertSpaces": true,
+        "editor.tabSize": 4
+    },
+    "editor.fontFamily": "'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback'",
+    "breadcrumbs.enabled": true
+}

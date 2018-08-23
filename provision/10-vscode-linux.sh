@@ -7,7 +7,10 @@ if [ ! -e /etc/apt/sources.list.d/vscode.list ]; then
 fi
 
 # Install
-[ -z "$(which code)" ] && sudo apt-get install -y code
+if [ -z "$(which code)" ]; then
+  sudo apt-get install -y code
+  cp -vr "$CWD"/config/Code "$CONFIG_DIR"/
+fi
 
 # Get installed extensions (lowercase)
 declare -a installed_extensions
@@ -16,18 +19,20 @@ IFS=$'\r\n' GLOBIGNORE='*' command eval 'installed_extensions=($(code --list-ext
 # Define extensions to be installed
 declare -a all_extensions
 all_extensions=(
-  mikestead.dotenv
-  dbaeumer.vscode-eslint
-  sidneys1.gitconfig
-  zignd.html-css-class-completion
-  davidanson.vscode-markdownlint
   2gua.rainbow-brackets
-  editorconfig.editorconfig
+  EditorConfig.EditorConfig
+  Zignd.html-css-class-completion
+  christian-kohler.path-intellisense
+  DavidAnson.vscode-markdownlint
+  dbaeumer.vscode-eslint
+  mikestead.dotenv
+  sidneys1.gitconfig
 )
 
 # Install extensions that are not already installed
 for E in ${all_extensions[@]}; do
-  if [[ ! " ${installed_extensions[@]} " =~ " ${E} " ]]; then
+  ext=$(echo $E | tr [:upper:] [:lower:])
+  if [[ ! " ${installed_extensions[@]} " =~ " ${ext} " ]]; then
     code --install-extension "$E"
   fi
 done
