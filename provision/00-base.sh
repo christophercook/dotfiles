@@ -1,8 +1,4 @@
 
-function tildePath {
-  echo $(echo $1 | sed "s|^$HOME|~|")
-}
-
 # Create VIM dirs
 mkdir -p "$CONFIG_DIR"/vim
 mkdir -p "$CACHE_DIR"/vim/{swap,backup,undo}

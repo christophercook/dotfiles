@@ -17,14 +17,14 @@ HELP
 exit; fi
 
 # Functions
+function tildePath {
+  echo $(echo $1 | sed "s|^$HOME|~|")
+}
+
 function __provision_cleanup {
-  unset CWD OS CONFIG_DIR DATA_DIR F FULL_NAME EMAIL_ADDRESS
+  unset CWD OS CONFIG_DIR DATA_DIR F
 }
 trap __provision_cleanup EXIT
-
-# Prompt for values
-read -p "Your full name? " FULL_NAME
-read -p "Your email address? " EMAIL_ADDRESS
 
 # Get script directory
 # realpath is expected to exist on modern Linux and macOS
@@ -53,7 +53,7 @@ if [[ -n "$DESKTOP_SESSION" || "$OS" = macos ]]; then
   fi
 
   # Run base provisioning scripts
-  export CONFIG_DIR DATA_DIR CACHE_DIR CWD OS FULL_NAME EMAIL_ADDRESS
+  export CONFIG_DIR DATA_DIR CACHE_DIR CWD OS
   for F in "$CWD"/provision/{00-base,01-base-"$OS",10-*-"$OS"}.sh; do
     [ -f "$F" ] && source "$F"
   done
