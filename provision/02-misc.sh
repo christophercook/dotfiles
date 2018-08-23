@@ -30,14 +30,20 @@ cp -nvr "$CWD"/config/git "$CONFIG_DIR"/
 
 # If a .gitconfig already exists in the $HOME directory
 if [ -f ~/.gitconfig ]; then
-  FULL_NAME="$(git config -f $HOME/.gitconfig --get user.name)"
-  EMAIL_ADDRESS="$(git config -f $HOME/.gitconfig --get user.email)"
-  [ -z "$FULL_NAME" ] && read -p "Your Git committer name? " FULL_NAME
-  [ -z "$EMAIL_ADDRESS" ] && read -p "Your Git committer email address? " EMAIL_ADDRESS
+  if [ -z "$(git config -f $CONFIG_DIR/git/config --get user.name)" ]; then
+    FULL_NAME="$(git config -f $HOME/.gitconfig --get user.name)"
+  fi
+  if [ -z "$(git config -f $CONFIG_DIR/git/config --get user.name)" ]; then
+    EMAIL_ADDRESS="$(git config -f $HOME/.gitconfig --get user.email)"
+  fi
 
   # Move the gitconfig out of the way
   mv -v ~/.gitconfig ~/gitconfig.bak
 fi
+
+# If no git author info then prompt user for it
+[ -z "$FULL_NAME" ] && [ -z "$(git config --get user.name)" ] && read -p "Your Git committer name? " FULL_NAME
+[ -z "$EMAIL_ADDRESS" ] && [ -z "$(git config --get user.email)" ] && read -p "Your Git committer email address? " EMAIL_ADDRESS
 
 # Update Git configuration
 git config -f "$CONFIG_DIR"/git/config core.excludesfile $(tildePath "$CONFIG_DIR"/git/excludes)
