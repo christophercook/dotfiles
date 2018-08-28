@@ -54,7 +54,7 @@ if [[ -n "$DESKTOP_SESSION" || "$OS" = macos ]]; then
 
   # Run base provisioning scripts
   export CONFIG_DIR DATA_DIR CACHE_DIR CWD OS
-  for F in "$CWD"/provision/{00-base,01-base-"$OS",10-*-"$OS"}.sh; do
+  for F in "$CWD"/packages/*.sh; do
     [ -f "$F" ] && source "$F"
   done
 
