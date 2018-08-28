@@ -21,5 +21,5 @@ yarn_modules=(
   vue-cli
 )
 for M in "${yarn_modules[@]}"; do
-  [ ! -d $DATA_DIR/yarn/global/node_modules/$M ] && yarn global add "$M"
+  [ -n "$(yarn global list | grep 'info \"$M@')" ] && yarn global add "$M"
 done
