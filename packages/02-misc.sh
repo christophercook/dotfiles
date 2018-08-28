@@ -1,7 +1,6 @@
-
-function tildePath {
-  echo $(echo $1 | sed "s|^$HOME|~|")
-}
+################################
+# Set up VIM to support XDG Dirs
+################################
 
 # Create VIM dirs
 mkdir -p "$CONFIG_DIR"/vim
@@ -10,6 +9,7 @@ mkdir -p "$RUNTIME_DIR"/vim
 
 # VIM configuration to support XDG DIRS
 if [ ! -f "$CONFIG_DIR"/vim/config ]; then
+  echo "creating $CONFIG_DIR/vim/config"
 cat << EOF > "$CONFIG_DIR"/vim/config
 set directory=$(tildePath $CACHE_DIR/vim/swap)
 set backupdir=$(tildePath $CACHE_DIR/vim/backup)
@@ -19,21 +19,33 @@ set runtimepath=$RUNTIME_DIR/vim
 EOF
 fi
 
-echo "Copying data directories"
-for F in "$CWD"/{data,data-"$OS"}; do
-  [ -d "$F" ] && cp -nvr "$F"/* "$DATA_DIR"/
-done
+# TODO: Clean up old VIM files
 
-# Copy config directories which must differ from repo version
-echo "Copying config directories"
+############
+# Set up Git
+############
+
+# Copy config rather than symlink
 cp -nvr "$CWD"/config/git "$CONFIG_DIR"/
 
-# Back up and relocate replaced configs
-echo "Backing up configuration files"
-[ -f ~/.gitconfig ] && mv ~/.gitconfig ~/.gitconfig.bak
+# If a .gitconfig already exists in the $HOME directory
+if [ -f ~/.gitconfig ]; then
+  if [ -z "$(git config -f $CONFIG_DIR/git/config --get user.name)" ]; then
+    FULL_NAME="$(git config -f $HOME/.gitconfig --get user.name)"
+  fi
+  if [ -z "$(git config -f $CONFIG_DIR/git/config --get user.name)" ]; then
+    EMAIL_ADDRESS="$(git config -f $HOME/.gitconfig --get user.email)"
+  fi
 
-# Finish Git configuration
-echo "Finishing Git configuration"
+  # Move the gitconfig out of the way
+  mv -v ~/.gitconfig ~/gitconfig.bak
+fi
+
+# If no git author info then prompt user for it
+[ -z "$FULL_NAME" ] && [ -z "$(git config --get user.name)" ] && read -p "Your Git committer name? " FULL_NAME
+[ -z "$EMAIL_ADDRESS" ] && [ -z "$(git config --get user.email)" ] && read -p "Your Git committer email address? " EMAIL_ADDRESS
+
+# Update Git configuration
 git config -f "$CONFIG_DIR"/git/config core.excludesfile $(tildePath "$CONFIG_DIR"/git/excludes)
 [ -n "$FULL_NAME" ] && git config -f "$CONFIG_DIR"/git/config user.name "$FULL_NAME"
 [ -n "$EMAIL_ADDRESS" ] && git config -f "$CONFIG_DIR"/git/config user.email "$EMAIL_ADDRESS"
