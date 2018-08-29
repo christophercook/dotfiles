@@ -6,7 +6,7 @@
 # https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html
 
 # If this file is being sourced, exit now.
-[[ "$1" == "source" ]] && return
+[[ "$0" != "${BASH_SOURCE[0]}" ]] && return
 
 # Display help
 if [[ "$1" == "-h" || "$1" == "--help" ]]; then cat <<HELP
@@ -18,7 +18,7 @@ exit; fi
 
 # Functions
 function tildePath {
-  echo $(echo $1 | sed "s|^$HOME|~|")
+  echo "${1/"$HOME"/"~"}"
 }
 
 function __provision_cleanup {
@@ -28,8 +28,8 @@ trap __provision_cleanup EXIT
 
 # Get script directory
 # realpath is expected to exist on modern Linux and macOS
-if [[ -x "$(which realpath)" ]] && [[ -n "$BASH_SOURCE[0]" ]]; then
-  CWD=$(dirname $(realpath "$BASH_SOURCE[0]"))
+if [[ -x "$(which realpath)" ]] && [[ -n "${BASH_SOURCE[0]}" ]]; then
+  CWD="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
 else
   CWD="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd )"
 fi
@@ -53,8 +53,9 @@ if [[ -n "$DESKTOP_SESSION" || "$OS" = macos ]]; then
   fi
 
   # Run base provisioning scripts
-  export CONFIG_DIR DATA_DIR CACHE_DIR CWD OS
+  export CONFIG_DIR DATA_DIR CACHE_DIR RUNTIME_DIR CWD OS
   for F in "$CWD"/packages/*.sh; do
+    # shellcheck disable=SC1090
     [ -f "$F" ] && source "$F"
   done
 
