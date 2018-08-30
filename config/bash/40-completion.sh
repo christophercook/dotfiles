@@ -1,3 +1,7 @@
+#!/usr/bin/env bash
+
+# If this file is not being sourced, exit now.
+[[ "$0" = "${BASH_SOURCE[0]}" ]] && echo "Do not run this script directly." && exit
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile

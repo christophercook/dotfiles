@@ -1,3 +1,8 @@
+#!/usr/bin/env bash
+
+# If this file is not being sourced, exit now.
+[[ "$0" = "${BASH_SOURCE[0]}" ]] && echo "Do not run this script directly." && exit
+
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
@@ -8,9 +13,13 @@
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
-  DCF="${XDG_CONFIG_HOME-$HOME/.config}"/dircolors
-  test -r "$DCF" && eval $(dircolors -b "$DCF") || eval "$(dircolors -b)"
-  unset DCF
+  dc="${XDG_CONFIG_HOME-$HOME/.config}"/dircolors
+  if [ -r "$dc" ]; then
+    eval "$(dircolors -b "$dc")"
+  else
+    eval "$(dircolors -b)"
+  fi
+  unset dc
 fi
 
 # colored GCC warnings and errors

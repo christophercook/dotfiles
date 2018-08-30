@@ -1,10 +1,15 @@
+#!/usr/bin/env bash
+
+# If this file is not being sourced, exit now.
+[[ "$0" = "${BASH_SOURCE[0]}" ]] && echo "Do not run this script directly." && exit
+
 # enable color support of ls and also add handy aliases
 
 if [ "$COLOR_TERM" = yes ]; then
   # ls colors
   if [[ "$OSTYPE" = darwin* ]]; then
     export LSCOLORS='ExGxFxDxCxDxDxhbhdacEc'
-    CLICOLOR=yes
+    export CLICOLOR=yes
   else
     eval "$(dircolors -b $XDG_CONFIG_HOME/bash/dircolors)" || eval "$(dircolors -b)"
     alias ls='ls --color=auto'
