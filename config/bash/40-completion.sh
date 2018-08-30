@@ -13,11 +13,3 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
-
-
-# tabtab source for serverless package
-# uninstall by removing these lines or running `tabtab uninstall serverless`
-[ -f /home/chris/Projects/node_modules/tabtab/.completions/serverless.bash ] && . /home/chris/Projects/node_modules/tabtab/.completions/serverless.bash
-# tabtab source for sls package
-# uninstall by removing these lines or running `tabtab uninstall sls`
-[ -f /home/chris/Projects/node_modules/tabtab/.completions/sls.bash ] && . /home/chris/Projects/node_modules/tabtab/.completions/sls.bash
