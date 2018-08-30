@@ -1,4 +1,14 @@
-if [ "$(uname -s)" = Linux ] && [ -n "$which apt-get" ]; then
+#!/usr/bin/env bash
+
+# If this file is not being sourced, exit now.
+[[ "$0" = "${BASH_SOURCE[0]}" ]] && echo "Do not run this script directly." && exit
+
+#######################
+# Install Google Chrome
+#######################
+
+# Detect debian package manager
+if [ "$(uname -s)" = Linux ] && [ -n "$(which apt-get)" ]; then
 
   # Add Google Chrome repo
   if [ ! -e /etc/apt/sources.list.d/google-chrome.list ]; then

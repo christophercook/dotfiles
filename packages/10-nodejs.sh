@@ -1,3 +1,12 @@
+#!/usr/bin/env bash
+
+# If this file is not being sourced, exit now.
+[[ "$0" = "${BASH_SOURCE[0]}" ]] && echo "Do not run this script directly." && exit
+
+#######################
+# Prepare to install Node.js
+#######################
+
 # Check for NPM_CONFIG_USERCONFIG and initialize if not set
 [ -z "$NPM_CONFIG_USERCONFIG" ] && NPM_CONFIG_USERCONFIG="$CONFIG_DIR"/npm
 mkdir -p "$CONFIG_DIR"/npm

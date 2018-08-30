@@ -22,7 +22,7 @@ function tildePath {
 }
 
 function __provision_cleanup {
-  unset CWD OS CONFIG_DIR DATA_DIR F
+  unset CWD OS CONFIG_DIR DATA_DIR CACHE_DIR RUNTIME_DIR p
 }
 trap __provision_cleanup EXIT
 
@@ -54,9 +54,9 @@ if [[ -n "$DESKTOP_SESSION" || "$OS" = macos ]]; then
 
   # Run base provisioning scripts
   export CONFIG_DIR DATA_DIR CACHE_DIR RUNTIME_DIR CWD OS
-  for F in "$CWD"/packages/*.sh; do
+  for p in "$CWD"/packages/*.sh; do
     # shellcheck disable=SC1090
-    [ -f "$F" ] && source "$F"
+    [ -f "$p" ] && source "$p"
   done
 
 fi
