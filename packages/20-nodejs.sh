@@ -39,4 +39,4 @@ done
 # The serverless install misbehaves by injecting completion into .bashrc
 # and tabtab completion is annoyingly slow. Update this if we ever need
 # tab completion for serverless.
-rm "$HOME/".bashrc
+[ -r "$HOME"/.bashrc ] && rm "$HOME/".bashrc
