@@ -25,8 +25,9 @@ npm config set optional false
 
 # Install some global modules
 yarn_modules=(
-  eslint
   create-react-app
+  eslint
+  serverless
   vue-cli
 )
 for m in "${yarn_modules[@]}"; do
@@ -34,3 +35,8 @@ for m in "${yarn_modules[@]}"; do
     yarn global add --ignore-optional "$m"
   fi
 done
+
+# The serverless install misbehaves by injecting completion into .bashrc
+# and tabtab completion is annoyingly slow. Update this if we ever need
+# tab completion for serverless.
+rm "$HOME/".bashrc
