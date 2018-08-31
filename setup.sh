@@ -79,6 +79,9 @@ EOF
     fi
   fi
 
+  # Move some supported dot files from home
+  [ -d "$HOME"/.gnupg ] && mv "$HOME"/.gnupg "$config_dir"/gnupg
+
   # Display final instructions
   echo -e "\033[1;37m"
   echo -e "All done setting up Bash. Close and restart your terminal."
