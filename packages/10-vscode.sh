@@ -49,7 +49,7 @@ if [ -n "$(which code)" ]; then
   for e in "${all_extensions[@]}"; do
     ext=$(echo "$e" | tr "[:upper:]" "[:lower:]")
     if [[ ! " ${installed_extensions[*]} " =~ $ext ]]; then
-      code --install-extension "$E"
+      code --install-extension "$e"
     fi
   done
 fi
