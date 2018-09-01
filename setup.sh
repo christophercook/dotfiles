@@ -26,9 +26,11 @@ if [[ -n "$DESKTOP_SESSION" || "$OSTYPE" = darwin* ]]; then
   if [[ "$OSTYPE" = darwin* ]]; then
     config_dir="${XDG_CONFIG_HOME-$HOME/Library/Application Support}"
     data_dir="${XDG_DATA_HOME-$HOME/Library/Application Support}"
+    cache_dir="${XDG_CACHE_HOME-$HOME/Library/Caches}"
   else
     config_dir="${XDG_CONFIG_HOME-$HOME/.config}"
     data_dir="${XDG_DATA_HOME-$HOME/.local/share}"
+    cache_dir="${XDG_CACHE_HOME-$HOME/.cache}"
   fi
 
   # Move bash history to new data_dir but don't overwrite
@@ -78,6 +80,10 @@ if [[ -n "$DESKTOP_SESSION" || "$OSTYPE" = darwin* ]]; then
 EOF
     fi
   fi
+
+  # Move some supported dot files from home
+  [ -d "$HOME"/.gnupg ] && mv "$HOME"/.gnupg "$config_dir"/gnupg
+  [ -f "$HOME"/.ICEauthority ] && mkdir -p "$cache_dir"/ice && mv "$HOME"/.ICEauthority "$cache_dir"/ice/authority
 
   # Display final instructions
   echo -e "\033[1;37m"
