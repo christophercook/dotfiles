@@ -27,12 +27,13 @@ if [ "$(uname -s)" = Linux ] && [ -n "$(which apt-get)" ]; then
   # Configure gnome app preferences
   if [ -n "$(which gsettings)" ]; then
 
-    # set gnome terminal colors to tango dark scheme
-    id=$(sed -e "s/'//g" <<<"$(gsettings get org.gnome.Terminal.ProfilesList default)")
+    # set gnome terminal configuration
+    id="$(gsettings get org.gnome.Terminal.ProfilesList default)"
+    id="${id//\'/}"
     gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:"$id"/ use-theme-colors false
     gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:"$id"/ use-theme-transparency false
-    gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:"$id"/ background-color 'rgb(46,52,54)'
-    gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:"$id"/ foreground-color 'rgb(211,215,207)'
+    gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:"$id"/ background-color 'rgb(0,0,0)'
+    gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:"$id"/ foreground-color 'rgb(255,255,255)'
     gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:"$id"/ default-size-columns 120
     gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:"$id"/ default-size-rows 40
     gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:"$id"/ audible-bell false
