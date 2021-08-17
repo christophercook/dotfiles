@@ -29,6 +29,5 @@ shopt -s checkwinsize
 export DOCKER_CONFIG="$XDG_CONFIG_HOME"/docker
 export GNUPGHOME="$XDG_CONFIG_HOME"/gnupg
 export LESSHISTFILE=- # disable less history
-export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME"/npm/config
 export VIMINIT=":source $XDG_CONFIG_HOME"/vim/config
 export ICEAUTHORITY="$XDG_CACHE_HOME"/ice/authority
