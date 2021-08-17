@@ -27,9 +27,6 @@ if [ "$(uname -s)" = Linux ] && [ -n "$(which apt-get)" ]; then
 fi
 
 if [ -n "$(which code)" ]; then
-  # Get installed extensions (lowercase)
-  declare -a installed_extensions
-  IFS=$'\r\n' GLOBIGNORE='*' command eval "installed_extensions=($(code --list-extensions | tr "[:upper:]" "[:lower:]"))"
 
   # Define extensions to be installed
   declare -a all_extensions
@@ -45,11 +42,8 @@ if [ -n "$(which code)" ]; then
     timonwong.shellcheck
   )
 
-  # Install extensions that are not already installed
+  # Install extensions
   for e in "${all_extensions[@]}"; do
-    ext=$(echo "$e" | tr "[:upper:]" "[:lower:]")
-    if [[ ! " ${installed_extensions[*]} " =~ $ext ]]; then
-      code --install-extension "$e"
-    fi
+    code --force --install-extension "$e"
   done
 fi
