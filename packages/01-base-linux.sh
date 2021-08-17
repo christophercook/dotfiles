@@ -12,7 +12,7 @@ if [ "$(uname -s)" = Linux ] && [ -n "$(which apt-get)" ]; then
 
   # Define the list of required repository packages
   packages=( apt-transport-https ca-certificates curl vim git unzip vlc
-            python-pip openvpn network-manager-openvpn-gnome meld shellcheck )
+            python3-pip openvpn network-manager-openvpn-gnome meld shellcheck )
 
   # Install packages individually, instead of all together, so that
   # we can check if they are installed and skip if they are installed
