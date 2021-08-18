@@ -64,6 +64,19 @@ if [[ -n "$DESKTOP_SESSION" || "$OSTYPE" = darwin* ]]; then
   # Create config dir if it doesn't exist
   mkdir -p "$data_dir"
 
+  # Add support for user profile in XDG CONFIG HOME
+  if [ ! -f /etc/profile.d/xdg_config_home_profile ]; then
+    sudo tee /etc/profile.d/xdg_config_home_profile.sh > /dev/null << EOF
+# /etc/profile.d/xdg_config_home_profile.sh - Load user profile from XDG CONFIG HOME
+
+# Added by https://github.com/christophercook/dotfiles
+
+# Source user profile if available
+[ -r "\${XDG_CONFIG_HOME:-$HOME/.config}/profile" ] &&
+            . "\${XDG_CONFIG_HOME:-$HOME/.config}/profile"
+EOF
+  fi
+
   # Symlink bash config into XDG_CONFIG_HOME
   ln -sfv "$cwd"/config/bash "$config_dir"
 
@@ -87,7 +100,7 @@ EOF
 
   # Display final instructions
   echo -e "\033[1;37m"
-  echo -e "All done setting up Bash. Close and restart your terminal."
+  echo -e "All done setting up Bash. Close and restart your terminal. Some changes require rebooting."
   echo -e "\033[0m"
 
 ### Server environment
@@ -102,4 +115,4 @@ else
 fi
 
 # Clean up
-unset config_dir data_dir cwd
+unset config_dir data_dir cache_dir cwd
