@@ -31,3 +31,4 @@ export GNUPGHOME="$XDG_CONFIG_HOME"/gnupg
 export LESSHISTFILE=- # disable less history
 export VIMINIT=":source $XDG_CONFIG_HOME"/vim/config
 export ICEAUTHORITY="$XDG_CACHE_HOME"/ice/authority
+export VSCODE_EXTENSIONS="$XDG_CONFIG_HOME"/Code/extensions
