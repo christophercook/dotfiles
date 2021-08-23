@@ -35,6 +35,7 @@ fi
 
 mkdir -p ~/.ssh
 cp -nvr "$CWD"/config/ssh/config ~/.ssh/config
+sed -i "s/\/home\/user\/.ssh/\/home\/$USER\/.ssh/;s/\s*# Adjust user path$//" ~/.ssh/config
 
 # Set up Git
 # ----------
