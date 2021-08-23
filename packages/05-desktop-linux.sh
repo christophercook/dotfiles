@@ -90,6 +90,15 @@ if [ "$(uname -s)" = Linux ] && [ -n "$(which apt-get)" ]; then
     # Configure VSCode
     if [ -n "$(which code)" ]; then
 
+      # Add env var so VSCode will load extensions
+      # from the proper config path
+      if [[ ! -f "$CONFIG_DIR/profile" ]] || ! grep -q VSCODE "$CONFIG_DIR/profile"
+      then
+        tee -a "$CONFIG_DIR/profile" > /dev/null << EOF
+export VSCODE_EXTENSIONS="\${XDG_CONFIG_HOME:-\$HOME/.config}/Code/extensions"
+EOF
+      fi
+
       # Copy config files
       #cp -vr "$CWD"/config/Code "$CONFIG_DIR"/
 
@@ -108,6 +117,7 @@ if [ "$(uname -s)" = Linux ] && [ -n "$(which apt-get)" ]; then
       )
 
       # Install extensions
+      export VSCODE_EXTENSIONS="$CONFIG_DIR/Code/extensions"
       for e in "${all_extensions[@]}"; do
         code --force --install-extension "$e"
       done
