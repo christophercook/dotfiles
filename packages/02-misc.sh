@@ -30,6 +30,12 @@ fi
 # TODO: Clean up old VIM files
 
 
+# SSH config example
+# ----------
+
+mkdir -p ~/.ssh
+cp -nvr "$CWD"/config/ssh/config ~/.ssh/config
+
 # Set up Git
 # ----------
 

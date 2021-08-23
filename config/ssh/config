@@ -1,0 +1,10 @@
+Host github.com
+    Hostname github.com
+    User git
+    PreferredAuthentications publickey
+    IdentityFile /home/user/.ssh/github_rsa  # Adjust user path
+
+Host disabledKnownHostsFile
+    StrictHostKeyChecking no
+    UserKnownHostsFile /dev/null
+    Compression yes
