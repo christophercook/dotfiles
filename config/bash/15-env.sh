@@ -26,9 +26,8 @@ shopt -s checkwinsize
 #shopt -s globstar
 
 # Define vars for apps which need help supporting XDG dirs
-export DOCKER_CONFIG="$XDG_CONFIG_HOME"/docker
-export GNUPGHOME="$XDG_CONFIG_HOME"/gnupg
+export DOCKER_CONFIG="$XDG_CONFIG_HOME/docker"
+export GNUPGHOME="$XDG_CONFIG_HOME/gnupg"
 export LESSHISTFILE=- # disable less history
-export VIMINIT=":source $XDG_CONFIG_HOME"/vim/config
-export ICEAUTHORITY="$XDG_CACHE_HOME"/ice/authority
-export VSCODE_EXTENSIONS="$XDG_CONFIG_HOME"/Code/extensions
+export VIMINIT=":source $XDG_CONFIG_HOME/vim/config"
+export ICEAUTHORITY="$XDG_CACHE_HOME/ice/authority"
